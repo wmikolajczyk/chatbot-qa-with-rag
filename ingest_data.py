@@ -1,3 +1,4 @@
+import abc
 import glob
 import json
 import logging
@@ -35,7 +36,13 @@ def get_device():
     return device
 
 
-class HFE5Embeddings:
+class AbstractEmbeddings:
+    @abc.abstractmethod
+    def embed_documents(self, docs):
+        pass
+
+
+class HFE5Embeddings(AbstractEmbeddings):
     def __init__(self):
         self.embedding_model = HuggingFaceEmbeddings(
             model_name="intfloat/e5-large-v2", model_kwargs={"device": get_device()}
@@ -47,13 +54,27 @@ class HFE5Embeddings:
 
 
 @lru_cache(maxsize=1)
-def get_embedding_model(model_id):
+def get_embedding_model(model_id) -> AbstractEmbeddings:
     models = {"hf-e5": HFE5Embeddings}
     model_cls = models[model_id]
     return model_cls()
 
 
-class FAISSVectorDb:
+class AbstractVectorDb:
+    @abc.abstractmethod
+    def load_vector_db(self):
+        pass
+
+    @abc.abstractmethod
+    def store_embeddings(self, docs_embeddings_pairs, metadata):
+        pass
+
+    @abc.abstractmethod
+    def similarity_search(self, query, n_docs=3):
+        pass
+
+
+class FAISSVectorDb(AbstractVectorDb):
     def __init__(self, embedding_model, vector_db_path):
         self.embedding_model = embedding_model
         self.vector_db_path = vector_db_path
@@ -78,7 +99,7 @@ class FAISSVectorDb:
 
 
 @lru_cache(maxsize=1)
-def get_vector_db(vector_db_id, embedding_model, vector_db_path):
+def get_vector_db(vector_db_id, embedding_model, vector_db_path) -> AbstractVectorDb:
     vector_dbs = {"faiss": FAISSVectorDb}
     vector_db_cls = vector_dbs[vector_db_id]
     return vector_db_cls(embedding_model, vector_db_path)
