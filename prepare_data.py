@@ -6,7 +6,7 @@ import polars as pl
 
 pl.Config.set_fmt_str_lengths(50)
 
-DATASET_DIR = "./TMDB-5000"
+DATASET_DIR = "TMDB-5000"
 
 
 def download_dataset():
