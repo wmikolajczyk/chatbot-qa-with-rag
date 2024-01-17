@@ -162,3 +162,4 @@ cython_debug/
 # generate embeddings data
 generate_embeddings/TMDB-5000
 generate_embeddings/data
+generate_embeddings/vector_db
