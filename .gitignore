@@ -160,6 +160,7 @@ cython_debug/
 .idea/
 
 # generate embeddings data
+TMDB-*
 generate_embeddings/TMDB-5000
 generate_embeddings/data
 generate_embeddings/vector_db
