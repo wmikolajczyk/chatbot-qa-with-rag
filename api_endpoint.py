@@ -27,7 +27,7 @@ async def get_context(question: Question, n_docs: int = 3) -> dict:
 
 
 @app.post("/generate_answer")
-async def get_context(question: Question, n_docs: int = 3) -> dict:
+async def generate_answer(question: Question, n_docs: int = 3) -> dict:
     relevant_docs = similarity_search(question.text, n_docs=n_docs)
     answer = question_answering(question.text, relevant_docs)
     return {"answer": answer}
