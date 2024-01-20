@@ -60,11 +60,16 @@ def simple_question_answering(question):
 
 def main():
     query = "Who is James Bond?"
+    print("simple QA")
+    answer = simple_question_answering(query)
+    print(f"answer: {answer}")
+
+    print("RAG QA")
     relevant_docs = similarity_search(query)
     print(relevant_docs)
 
     answer = question_answering(query, relevant_docs)
-    print(answer)
+    print(f"answer: {answer}")
 
 
 if __name__ == "__main__":
