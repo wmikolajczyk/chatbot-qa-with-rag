@@ -7,7 +7,7 @@ from chatbot_qa import similarity_search, question_answering
 
 
 def question_answering_demo(question_text, *relevant_docs_input):
-    relevant_docs = [ast.literal_eval(el) for el in relevant_docs_input]  # literal_eval - string -> dict
+    relevant_docs = [ast.literal_eval(el) for el in relevant_docs_input if el]  # literal_eval - string -> dict
     answer = question_answering(question_text, relevant_docs)
     return answer
 

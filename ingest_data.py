@@ -85,7 +85,6 @@ class FAISSVectorDb(AbstractVectorDb):
         return vector_db
 
     def store_embeddings(self, docs_embeddings_pairs, metadata):
-        # feel free to change vector db
         vector_db = FAISS.from_embeddings(docs_embeddings_pairs, self.embedding_model, metadata)
         vector_db.save_local(self.vector_db_path)
 
