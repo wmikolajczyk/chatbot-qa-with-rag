@@ -47,6 +47,17 @@ Helpful Answer:"""
     return answer
 
 
+def simple_question_answering(question):
+    llm_model = get_llm_model(LLM_MODEL_ID)
+
+    prompt_template = """{question}"""
+    qa_chain_prompt = PromptTemplate(input_variables=["question"], template=prompt_template)
+    llm_chain = LLMChain(prompt=qa_chain_prompt, llm=llm_model, verbose=True)
+
+    answer = llm_chain.run(question=question)
+    return answer
+
+
 def main():
     query = "Who is James Bond?"
     relevant_docs = similarity_search(query)
